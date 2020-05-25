@@ -21,3 +21,7 @@ func Get_self_info(ctx iris.Context) {
 	id := ctx.Params().Get("id")
 	ctx.WriteString(id)
 }
+
+func Make_friends(ctx iris.Context) {
+
+}

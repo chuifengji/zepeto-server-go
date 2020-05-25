@@ -97,6 +97,14 @@ util:公共项（备用）
 
 16. personal/get-search
 
+搜索好友
+
+17. personal/addfriend
+
+单向好友还是双向好友？未定。
+<user_id,friend_id>
+
 -合照肯定要保存在用户自己手机上了，不然我们的服务器撑不住。
 待确定：模糊搜索？加入班级？
+
 
