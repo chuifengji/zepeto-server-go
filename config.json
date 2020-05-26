@@ -1,8 +1,10 @@
 {
   
     "Port": ":8848",
-    "DBUserName": "",
-    "DBPassword": "",
+    "AppID":"AppID",
+    "SecretKey":"SecretKey",
+    "DBUserName": "debian-sys-maint",
+    "DBPassword": "376A03DSrWU0akjN",
     "DBIp": "127.0.0.1",
     "DBPort": "3306",
     "DBName": "test2"
