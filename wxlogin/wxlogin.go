@@ -21,7 +21,7 @@ func WXLogin(code string) (*WXLoginResp, error) {
 	url := "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code"
 
 	// 合成url,
-	url = fmt.Sprintf(url, config.Sysconfig.AppIDWx, config.Sysconfig.SecretKeyWx, code)
+	url = fmt.Sprintf(url, config.Sysconfig.AppID, config.Sysconfig.SecretKeyWx, code)
 
 	// 创建http get请求
 	resp, err := http.Get(url)

@@ -23,10 +23,10 @@ func init() {
 
 type sysconfig struct {
 	Port        string `json:"Port"`
-	AppIDWx     string `json:"AppIDWx"`
+	AppID       string `json:"AppID"`
 	SecretKeyWx string `json:"SecretKeyWx"`
-	SecretKeyQn string `json:"SecretKeyQn"`
 	AccessKeyQn string `json:"AccessKeyQn"`
+	SecretKeyQn string `json:"SecretKeyQn"`
 	BucketName  string `json:"BucketName"`
 	DBUserName  string `json:"DBUserName"`
 	DBPassword  string `json:"DBPassword"`
