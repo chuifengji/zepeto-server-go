@@ -1,8 +1,11 @@
 {
   
     "Port": ":8848",
-    "AppID":"AppID",
-    "SecretKey":"SecretKey",
+    "AppIDWx":"AppID_Wx",
+    "SecretKeyWx":"SecretKeyWx",
+    "SecretKeyQn":"SecretKeyQn",
+    "AccessKeyQn":"AccessKeyQn",
+    "BucketName":"BucketName",
     "DBUserName": "debian-sys-maint",
     "DBPassword": "376A03DSrWU0akjN",
     "DBIp": "127.0.0.1",

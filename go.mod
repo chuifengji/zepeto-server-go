@@ -21,6 +21,8 @@ require (
 	github.com/kataras/iris v11.1.1+incompatible
 	github.com/klauspost/compress v1.10.6 // indirect
 	github.com/microcosm-cc/bluemonday v1.0.2 // indirect
+	github.com/qiniu/api.v7 v7.2.5+incompatible
+	github.com/qiniu/api.v7/v7 v7.5.0
 	github.com/ryanuber/columnize v2.1.0+incompatible // indirect
 	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
 	golang.org/x/crypto v0.0.0-20200510223506-06a226fb4e37 // indirect
