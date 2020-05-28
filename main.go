@@ -29,10 +29,11 @@ func main() {
 	})
 
 	app.PartyFunc("/personal", func(personal iris.Party) {
-		personal.Post("/insert-personal-info", controllers.Insert_personal_info)
-		personal.Post("/update-personal-image", controllers.Update_personal_image)
-		personal.Get("/get-friends-list", controllers.Get_friends_list)
-		personal.Get("/get-self-info", controllers.Get_self_info)
+		personal.Get("/login", controllers.Login)
+		personal.Post("/insert-personal-info", controllers.UpdatePersonalInfo)
+		personal.Post("/update-personal-image", controllers.UpdatePersonalImage)
+		personal.Get("/get-friends-list", controllers.GetFriendsList)
+		personal.Get("/get-self-info", controllers.GetSelfInfo)
 	})
 
 	app.Run(iris.Addr(":8080"))
