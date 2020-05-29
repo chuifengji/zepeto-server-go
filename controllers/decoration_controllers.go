@@ -1,14 +1,15 @@
 package controllers
 
 import (
-	"MindaZepeto/models"
 	"MindaZepeto/repohandler"
+	"MindaZepeto/util"
 	"strconv"
 
 	"github.com/kataras/iris"
 )
 
-func Add_decoration(ctx iris.Context) {
+//AddDecoration 添加饰品
+func AddDecoration(ctx iris.Context) {
 
 	name := ctx.PostValue("name")
 	url := ctx.PostValue("url")
@@ -16,32 +17,32 @@ func Add_decoration(ctx iris.Context) {
 
 }
 
-func Delete_decoration(ctx iris.Context) {
+//DeleteDecoration 删除饰品
+func DeleteDecoration(ctx iris.Context) {
 	id := ctx.PostValue("id")
-	id_mirr, err := strconv.Atoi(id) //string 类型转换成int
+	idMirr, err := strconv.Atoi(id) //string 类型转换成int
 	if err != nil {
 		panic(err)
 	}
-	repohandler.DeleteDecoration(id_mirr)
+	repohandler.DeleteDecoration(idMirr)
 }
 
-func Modify_decoration(ctx iris.Context) {
+//ModifyDecoration 修改饰品信息
+func ModifyDecoration(ctx iris.Context) {
 	id := ctx.PostValue("id")
-	id_mirr, err := strconv.Atoi(id) //string 类型转换成int
+	idMirr, err := strconv.Atoi(id) //string 类型转换成int
 	if err != nil {
 		panic(err)
 	}
 	name := ctx.PostValue("name")
 	url := ctx.PostValue("url")
-	result := repohandler.ModifyDecoration(name, url, id_mirr)
+	result := repohandler.ModifyDecoration(name, url, idMirr)
 	ctx.WriteString(result)
 }
 
-func Get_decoration_List(ctx iris.Context) {
+//GetDecorationList 获取饰品列表
+func GetDecorationList(ctx iris.Context) {
 	list := repohandler.GetDecorationList()
-	result := new(models.Result)
-	result.Data = list
-	result.Code = 200
-	result.Msg = "SUCCESS"
+	result := util.GetReturnData(list, "SUCCESS")
 	ctx.JSON(result)
 }

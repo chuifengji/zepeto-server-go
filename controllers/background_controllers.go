@@ -1,45 +1,46 @@
 package controllers
 
 import (
-	"MindaZepeto/models"
 	"MindaZepeto/repohandler"
+	"MindaZepeto/util"
 	"strconv"
 
 	"github.com/kataras/iris"
 )
 
-func Add_background(ctx iris.Context) {
+//AddBackground 添加背景图片（是不是还得保证不重复，别忘了哈）
+func AddBackground(ctx iris.Context) {
 	name := ctx.PostValue("name")
 	url := ctx.PostValue("url")
 	repohandler.AddBackground(name, url)
 }
 
-func Delete_background(ctx iris.Context) {
+//DeleteBackground 删除背景图片
+func DeleteBackground(ctx iris.Context) {
 	id := ctx.PostValue("id")
-	id_mirr, err := strconv.Atoi(id) //string 类型转换成int
+	idMirr, err := strconv.Atoi(id) //string 类型转换成int
 	if err != nil {
 		panic(err)
 	}
-	repohandler.DeleteBackground(id_mirr)
+	repohandler.DeleteBackground(idMirr)
 }
 
-func Modify_background(ctx iris.Context) {
+// ModifyBackground 修改背景图片
+func ModifyBackground(ctx iris.Context) {
 	id := ctx.PostValue("id")
-	id_mirr, err := strconv.Atoi(id) //string 类型转换成int
+	idMirr, err := strconv.Atoi(id) //string 类型转换成int
 	if err != nil {
 		panic(err)
 	}
 	name := ctx.PostValue("name")
 	url := ctx.PostValue("url")
-	result := repohandler.ModifyBackground(name, url, id_mirr)
+	result := repohandler.ModifyBackground(name, url, idMirr)
 	ctx.WriteString(result)
 }
 
-func Get_background_List(ctx iris.Context) {
+//GetBackgroundList 获取背景图片列表
+func GetBackgroundList(ctx iris.Context) {
 	list := repohandler.GetBackgroundList()
-	result := new(models.Result)
-	result.Data = list
-	result.Code = 200
-	result.Msg = "SUCCESS"
+	result := util.GetReturnData(list, "SUCCESS")
 	ctx.JSON(result)
 }

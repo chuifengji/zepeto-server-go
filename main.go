@@ -9,31 +9,35 @@ import (
 func main() {
 	app := iris.New()
 	app.PartyFunc("/decoration", func(decoration iris.Party) {
-		decoration.Post("/add", controllers.Add_decoration)
-		decoration.Post("/delete", controllers.Delete_decoration)
-		decoration.Post("/modify", controllers.Modify_decoration)
-		decoration.Get("/get-list", controllers.Get_decoration_List)
+		decoration.Post("/add", controllers.AddDecoration)
+		decoration.Post("/delete", controllers.DeleteDecoration)
+		decoration.Post("/modify", controllers.ModifyDecoration)
+		decoration.Get("/get-list", controllers.GetDecorationList)
 	})
 	app.PartyFunc("/background", func(background iris.Party) {
-		background.Post("/add", controllers.Add_background)
-		background.Post("/delete", controllers.Delete_background)
-		background.Post("/modify", controllers.Modify_background)
-		background.Get("/get-list", controllers.Get_background_List)
+		background.Post("/add", controllers.AddBackground)
+		background.Post("/delete", controllers.DeleteBackground)
+		background.Post("/modify", controllers.ModifyBackground)
+		background.Get("/get-list", controllers.GetBackgroundList)
 	})
 
 	app.PartyFunc("/appearance", func(appearance iris.Party) {
-		appearance.Post("/add", controllers.Add_appearance)
-		appearance.Post("/delete", controllers.Delete_appearance)
-		appearance.Post("/modify", controllers.Modify_appearance)
-		appearance.Get("/get-list", controllers.Get_appearance_List)
+		appearance.Post("/add", controllers.AddAppearance)
+		appearance.Post("/delete", controllers.DeleteAppearance)
+		appearance.Post("/modify", controllers.ModifyAppearance)
+		appearance.Get("/get-list", controllers.GetAppearanceList)
 	})
 
 	app.PartyFunc("/personal", func(personal iris.Party) {
 		personal.Get("/login", controllers.Login)
 		personal.Post("/insert-personal-info", controllers.UpdatePersonalInfo)
 		personal.Post("/update-personal-image", controllers.UpdatePersonalImage)
+		personal.Post("/makeFriends", controllers.MakeFriends)
 		personal.Get("/get-friends-list", controllers.GetFriendsList)
 		personal.Get("/get-self-info", controllers.GetSelfInfo)
+		personal.Get("/get-classmates-list", controllers.GetClassmateList)
+		personal.Get("/get-all-user-info", controllers.GetAllUserInfo)
+
 	})
 
 	app.Run(iris.Addr(":8080"))
