@@ -101,3 +101,8 @@ func GetMyFriendsList(myid string) *[]models.Users {
 	db.Raw("SELECT id,name, college,major,class,myimg FROM user WHERE id in (SELECT friend_id from friends WHERE my_id = ? )", myid).Scan(&result)
 	return result
 }
+func GetAllUserList() *[]models.Users {
+	var result = new([]models.Users)
+	db.Raw("SELECT id,name,college,major,class,myimg FROM user").Scan(&result)
+	return result
+}

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"MindaZepeto/config"
 	"MindaZepeto/repohandler"
 	"MindaZepeto/util"
 	"strconv"
@@ -10,34 +11,49 @@ import (
 
 //AddDecoration 添加饰品
 func AddDecoration(ctx iris.Context) {
+	value := ctx.GetCookie("usertoken")
+	if value == config.Sysconfig.UserToken {
+		name := ctx.URLParam("name")
+		url := ctx.URLParam("url")
+		repohandler.AddDecoration(name, url)
+		ctx.WriteString("200")
+	} else {
 
-	name := ctx.PostValue("name")
-	url := ctx.PostValue("url")
-	repohandler.AddDecoration(name, url)
+	}
 
 }
 
 //DeleteDecoration 删除饰品
 func DeleteDecoration(ctx iris.Context) {
-	id := ctx.PostValue("id")
-	idMirr, err := strconv.Atoi(id) //string 类型转换成int
-	if err != nil {
-		panic(err)
+	value := ctx.GetCookie("usertoken")
+	if value == config.Sysconfig.UserToken {
+		id := ctx.URLParam("id")
+		idMirr, err := strconv.Atoi(id) //string 类型转换成int
+		if err != nil {
+			panic(err)
+		}
+		repohandler.DeleteDecoration(idMirr)
+		ctx.WriteString("200")
 	}
-	repohandler.DeleteDecoration(idMirr)
+
 }
 
 //ModifyDecoration 修改饰品信息
 func ModifyDecoration(ctx iris.Context) {
-	id := ctx.PostValue("id")
-	idMirr, err := strconv.Atoi(id) //string 类型转换成int
-	if err != nil {
-		panic(err)
+	value := ctx.GetCookie("usertoken")
+	if value == config.Sysconfig.UserToken {
+		id := ctx.URLParam("id")
+		idMirr, err := strconv.Atoi(id) //string 类型转换成int
+		if err != nil {
+			panic(err)
+		}
+		name := ctx.URLParam("name")
+		url := ctx.URLParam("url")
+		repohandler.ModifyDecoration(name, url, idMirr)
+		ctx.WriteString("200")
+	} else {
+
 	}
-	name := ctx.PostValue("name")
-	url := ctx.PostValue("url")
-	result := repohandler.ModifyDecoration(name, url, idMirr)
-	ctx.WriteString(result)
 }
 
 //GetDecorationList 获取饰品列表

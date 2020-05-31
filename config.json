@@ -10,6 +10,6 @@
     "DBPassword": "376A03DSrWU0akjN",
     "DBIp": "127.0.0.1",
     "DBPort": "3306",
-    "DBName": "test2"
-
+    "DBName": "test2",
+   "UserToken":"10156966b8dcf3f31674fc57c17fc39462218d05"
   }

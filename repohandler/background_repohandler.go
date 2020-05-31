@@ -12,14 +12,9 @@ func DeleteBackground(id int) {
 	db.Delete(&background)
 }
 
-func ModifyBackground(name string, url string, id int) string {
+func ModifyBackground(name string, url string, id int) {
 	background := models.Background{Name: name, URL: url}
-	if err := db.Model(models.Background{}).Where("ID = ?", id).Update(&background).Error; err != nil {
-		//错误处理
-		return "error"
-	} else {
-		return "success"
-	}
+	db.Model(models.Background{}).Where("ID = ?", id).Update(&background)
 }
 
 func GetBackgroundList() *[]models.Background {

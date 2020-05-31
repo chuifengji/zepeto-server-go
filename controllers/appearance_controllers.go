@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"MindaZepeto/config"
 	"MindaZepeto/repohandler"
 	"MindaZepeto/util"
 	"strconv"
@@ -10,32 +11,51 @@ import (
 
 //AddAppearance 变量不能命名为ｔｙｐｅ，
 func AddAppearance(ctx iris.Context) {
-	typeAppearance := ctx.PostValue("type")
-	url := ctx.PostValue("url")
-	repohandler.AddAppearance(typeAppearance, url)
+	value := ctx.GetCookie("usertoken")
+	if value == config.Sysconfig.UserToken {
+		typeAppearance := ctx.URLParam("type")
+		url := ctx.URLParam("url")
+		repohandler.AddAppearance(typeAppearance, url)
+		ctx.WriteString("200")
+	} else {
+
+	}
 }
 
 //DeleteAppearance 删除
 func DeleteAppearance(ctx iris.Context) {
-	id := ctx.PostValue("id")
-	idMirr, err := strconv.Atoi(id) //string 类型转换成int
-	if err != nil {
-		panic(err)
+	value := ctx.GetCookie("usertoken")
+	if value == config.Sysconfig.UserToken {
+		id := ctx.URLParam("id")
+		idMirr, err := strconv.Atoi(id) //string 类型转换成int
+		if err != nil {
+			panic(err)
+		}
+		repohandler.DeleteAppearance(idMirr)
+		ctx.WriteString("200")
+	} else {
+
 	}
-	repohandler.DeleteAppearance(idMirr)
+
 }
 
 //ModifyAppearance 修改
 func ModifyAppearance(ctx iris.Context) {
-	id := ctx.PostValue("id")
-	idMirr, err := strconv.Atoi(id) //string 类型转换成int
-	if err != nil {
-		panic(err)
+	value := ctx.GetCookie("usertoken")
+	if value == config.Sysconfig.UserToken {
+		id := ctx.URLParam("id")
+		idMirr, err := strconv.Atoi(id) //string 类型转换成int
+		if err != nil {
+			panic(err)
+		}
+		typeAppearance := ctx.URLParam("type")
+		url := ctx.URLParam("url")
+		repohandler.ModifyAppearance(typeAppearance, url, idMirr)
+		ctx.WriteString("200")
+	} else {
+
 	}
-	typeAppearance := ctx.PostValue("type")
-	url := ctx.PostValue("url")
-	result := repohandler.ModifyAppearance(typeAppearance, url, idMirr)
-	ctx.WriteString(result)
+
 }
 
 //GetAppearanceList 获取列表信息

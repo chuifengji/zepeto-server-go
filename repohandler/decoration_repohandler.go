@@ -17,14 +17,9 @@ func DeleteDecoration(id int) {
 }
 
 //ModifyDecoration y1s1,grom实现的ｗｈｅｒｅ方法一点也不优雅。
-func ModifyDecoration(name string, url string, id int) string {
+func ModifyDecoration(name string, url string, id int) {
 	decoration := models.Decoration{Name: name, URL: url}
-	if err := db.Model(models.Decoration{}).Where("ID = ?", id).Update(&decoration).Error; err != nil {
-		//错误处理
-		return "error"
-	} else {
-		return "success"
-	}
+	db.Model(models.Decoration{}).Where("ID = ?", id).Update(&decoration)
 }
 
 func GetDecorationList() *[]models.Decoration {

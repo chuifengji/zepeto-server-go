@@ -33,4 +33,5 @@ type sysconfig struct {
 	DBIp        string `json:"DBIp"`
 	DBPort      string `json:"DBPort"`
 	DBName      string `json:"DBName"`
+	UserToken   string `json:"UserToken"`
 }

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"MindaZepeto/config"
 	"MindaZepeto/repohandler"
 	"MindaZepeto/util"
 	"MindaZepeto/wxlogin"
@@ -18,7 +19,7 @@ func Login(ctx iris.Context) {
 		ctx.JSON(result)
 	}
 	// // 保存登录态
-	USERID := util.GetMD5Encode(wxLoginResp.OpenID)
+	USERID := util.GetSHAEncode(wxLoginResp.OpenID)
 	//接下来需要验证数据库中是否存在该USER_ID
 	list := repohandler.VerifyHasThisUserID(USERID)
 	if list.USERID == "" { //不存在该用户
@@ -31,11 +32,11 @@ func Login(ctx iris.Context) {
 
 //UpdatePersonalInfo 更新个人信息
 func UpdatePersonalInfo(ctx iris.Context) {
-	userid := ctx.PostValue("user_id")
-	name := ctx.PostValue("name")
-	college := ctx.PostValue("college")
-	major := ctx.PostValue("major")
-	class := ctx.PostValue("class")
+	userid := ctx.URLParam("user_id")
+	name := ctx.URLParam("name")
+	college := ctx.URLParam("college")
+	major := ctx.URLParam("major")
+	class := ctx.URLParam("class")
 	list := repohandler.UpdateInfo(userid, name, college, major, class)
 	result := util.GetReturnData(list, "SUCCESS")
 	ctx.JSON(result)
@@ -44,8 +45,8 @@ func UpdatePersonalInfo(ctx iris.Context) {
 
 //UpdatePersonalImage 更新个人形象图片
 func UpdatePersonalImage(ctx iris.Context) {
-	userid := ctx.PostValue("user_id")
-	url := ctx.PostValue("url")
+	userid := ctx.URLParam("user_id")
+	url := ctx.URLParam("url")
 	list := repohandler.UpdateSelfImage(userid, url)
 	result := util.GetReturnData(list, "SUCCESS")
 	ctx.JSON(result)
@@ -79,13 +80,21 @@ func GetSelfInfo(ctx iris.Context) {
 
 //GetAllUserInfo 获取所有用户的个人信息，管理端的东西
 func GetAllUserInfo(ctx iris.Context) {
-
+	value := ctx.GetCookie("usertoken")
+	if value == config.Sysconfig.UserToken {
+		list := repohandler.GetAllUserList()
+		result := util.GetReturnData(list, "SUCCESS")
+		ctx.JSON(result)
+	} else {
+		result := util.GetReturnData(nil, "FAILED")
+		ctx.JSON(result)
+	}
 }
 
 //MakeFriends 交个朋友呗
 func MakeFriends(ctx iris.Context) {
-	myid := ctx.PostValue("myid")
-	friendid := ctx.PostValue("friendid")
+	myid := ctx.URLParam("myid")
+	friendid := ctx.URLParam("friendid")
 	// list := repohandler.MakeFriends(myid, friendid)
 	repohandler.MakeFriends(myid, friendid)
 	result := util.GetReturnData(nil, "SUCCESS")

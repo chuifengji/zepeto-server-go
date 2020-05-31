@@ -2,15 +2,18 @@ package util
 
 import (
 	"MindaZepeto/models"
-	"crypto/md5"
+	"crypto/sha1"
 	"encoding/hex"
+	"io"
 )
 
-//GetMD5Encode 使用ＭＤ５加密
-func GetMD5Encode(data string) string {
-	h := md5.New()
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+//GetSHAEncode 加密
+func GetSHAEncode(str string) string {
+	w := sha1.New()
+	io.WriteString(w, str)            //将str写入到w中
+	bw := w.Sum(nil)                  //w.Sum(nil)将w的hash转成[]byte格式
+	shastr2 := hex.EncodeToString(bw) //将 bw 转成字符串
+	return shastr2
 }
 
 // GetReturnData 对返回data的包裹

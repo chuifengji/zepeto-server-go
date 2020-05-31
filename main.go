@@ -8,6 +8,11 @@ import (
 
 func main() {
 	app := iris.New()
+	app.RegisterView(iris.HTML("./views", ".html"))
+	app.Get("/admin", controllers.Admin)
+	app.Get("/admin/login", controllers.AdminLogin)
+	app.Post("/admin/loginverity", controllers.Loginverity)
+
 	app.PartyFunc("/decoration", func(decoration iris.Party) {
 		decoration.Post("/add", controllers.AddDecoration)
 		decoration.Post("/delete", controllers.DeleteDecoration)
@@ -40,5 +45,5 @@ func main() {
 
 	})
 
-	app.Run(iris.Addr(":8080"))
+	app.Run(iris.Addr(":8081"))
 }

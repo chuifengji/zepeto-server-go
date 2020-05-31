@@ -17,15 +17,9 @@ func DeleteAppearance(id int) {
 	db.Delete(&appearance)
 }
 
-func ModifyAppearance(typeAppearance string, url string, id int) string {
+func ModifyAppearance(typeAppearance string, url string, id int) {
 	appearance := models.Appearance{TYPE: typeAppearance, URL: url}
-	if err := db.Model(models.Appearance{}).Where("ID = ?", id).Update(&appearance).Error; err != nil {
-		//错误处理
-		return "error"
-
-	} else {
-		return "success"
-	}
+	db.Model(models.Appearance{}).Where("ID = ?", id).Update(&appearance)
 
 }
 
