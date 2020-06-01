@@ -9,10 +9,11 @@ import (
 var Sysconfig = &sysconfig{}
 
 func init() {
-	//指定对应的json配置文件
-	b, err := ioutil.ReadFile("config.json")
+	// path, _ := filepath.Abs("./config/config.json")
+	// fmt.Println(path)
+	b, err := ioutil.ReadFile("./config.json") ///root/server/mindazepeto/config.json 线上版路径
 	if err != nil {
-		panic("Sys config read err")
+		panic(err)
 	} else {
 		err = jsoniter.Unmarshal(b, Sysconfig)
 		if err != nil {

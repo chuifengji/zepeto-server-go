@@ -32,10 +32,9 @@ func Admin(ctx iris.Context) {
 func Loginverity(ctx iris.Context) {
 	username := ctx.URLParam("username")
 	pwd := ctx.URLParam("password")
+	fmt.Println(pwd)
 	value := util.GetSHAEncode(util.GetSHAEncode(username + pwd))
 	ctx.SetCookieKV("usertoken", value)
-	fmt.Println(config.Sysconfig.UserToken)
-	fmt.Println(value)
 	if value == config.Sysconfig.UserToken {
 		ctx.WriteString("200")
 	} else {

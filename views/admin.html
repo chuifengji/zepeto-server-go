@@ -91,22 +91,34 @@
         "
       ></table>
 
-      <button id="open" class="mdui-btn mdui-color-pink-accent">open</button>
-
       <div class="mdui-dialog" id="dialog_appearance">
         <div class="mdui-textfield" style="padding: 20px;">
-          <input class="mdui-textfield-input" type="text" placeholder="TYPE" />
+          <input
+            class="mdui-textfield-input"
+            id="input_modify_appearance_type"
+            type="text"
+            placeholder="TYPE"
+          />
         </div>
 
         <div class="mdui-textfield" style="padding: 20px;">
-          <input class="mdui-textfield-input" type="text" placeholder="URL" />
+          <input
+            class="mdui-textfield-input"
+            id="input_modify_appearance_url"
+            type="text"
+            placeholder="URL"
+          />
         </div>
 
         <div class="mdui-dialog-actions">
           <button class="mdui-btn mdui-ripple" mdui-dialog-cancel>
             取消
           </button>
-          <button class="mdui-btn mdui-ripple" mdui-dialog-confirm>
+          <button
+            class="mdui-btn mdui-ripple"
+            id="btn_post_appearance_modify"
+            mdui-dialog-confirm
+          >
             修改
           </button>
         </div>
@@ -122,9 +134,9 @@
           <input
             class="mdui-textfield-input"
             type="text"
-            placeholder="TYPE"
+            placeholder="NAME"
             value=""
-            id="input_add_decoration_type"
+            id="input_add_decoration_name"
           />
         </div>
         <div class="mdui-textfield" style="width: 240px; padding-right: 60px;">
@@ -150,22 +162,34 @@
         "
       ></table>
 
-      <button id="open" class="mdui-btn mdui-color-pink-accent">open</button>
-
       <div class="mdui-dialog" id="dialog_decoration">
         <div class="mdui-textfield" style="padding: 20px;">
-          <input class="mdui-textfield-input" type="text" placeholder="TYPE" />
+          <input
+            class="mdui-textfield-input"
+            id="input_modify_decoration_type"
+            type="text"
+            placeholder="TYPE"
+          />
         </div>
 
         <div class="mdui-textfield" style="padding: 20px;">
-          <input class="mdui-textfield-input" type="text" placeholder="URL" />
+          <input
+            class="mdui-textfield-input"
+            id="input_modify_decoration_url"
+            type="text"
+            placeholder="URL"
+          />
         </div>
 
         <div class="mdui-dialog-actions">
           <button class="mdui-btn mdui-ripple" mdui-dialog-cancel>
             取消
           </button>
-          <button class="mdui-btn mdui-ripple" mdui-dialog-confirm>
+          <button
+            class="mdui-btn mdui-ripple"
+            id="btn_post_decoration_modify"
+            mdui-dialog-confirm
+          >
             修改
           </button>
         </div>
@@ -209,22 +233,34 @@
         "
       ></table>
 
-      <button id="open" class="mdui-btn mdui-color-pink-accent">open</button>
-
       <div class="mdui-dialog" id="dialog_background">
         <div class="mdui-textfield" style="padding: 20px;">
-          <input class="mdui-textfield-input" type="text" placeholder="TYPE" />
+          <input
+            class="mdui-textfield-input"
+            id="input_modify_background_type"
+            type="text"
+            placeholder="TYPE"
+          />
         </div>
 
         <div class="mdui-textfield" style="padding: 20px;">
-          <input class="mdui-textfield-input" type="text" placeholder="URL" />
+          <input
+            class="mdui-textfield-input"
+            id="input_modify_background_url"
+            type="text"
+            placeholder="URL"
+          />
         </div>
 
         <div class="mdui-dialog-actions">
           <button class="mdui-btn mdui-ripple" mdui-dialog-cancel>
             取消
           </button>
-          <button class="mdui-btn mdui-ripple" mdui-dialog-confirm>
+          <button
+            class="mdui-btn mdui-ripple"
+            id="btn_post_background_modify"
+            mdui-dialog-confirm
+          >
             修改
           </button>
         </div>
@@ -241,9 +277,14 @@
     <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
     <script>
+      var GlobalID = 0;
+      axios.defaults.baseURL = "http://123.56.241.180";
+      axios.defaults.headers.post["Content-Type"] = "x-www-form-urlencoded";
+    </script>
+    <script>
       //用户列表
       $("#table-request-user").bootstrapTable({
-        url: "http://localhost:8081/personal/get-all-user-info", //请求后台的URL（*）
+        url: "/personal/get-all-user-info", //请求后台的URL（*）
         method: "get", //请求方式（*）
         responseHandler: function (res) {
           console.log(res);
@@ -298,10 +339,9 @@
     <script>
       //用户外貌列表
       $("#table-request-appearance").bootstrapTable({
-        url: "", //请求后台的URL（*）
-        method: "get", //请求方式（*）
+        url: "/appearance/get-list",
+        method: "get",
         responseHandler: function (res) {
-          console.log(res);
           return res.Data;
         },
         toolbar: "#toolbar",
@@ -339,10 +379,7 @@
             align: "center",
             valign: "middle",
             width: "120",
-            // visible: false,
             formatter: function (value, row, index) {
-              // var sid_code = base64encode(row.sid + '');   //  sid 加密处理
-              // alert(sid_code);
               return (
                 '<a href="#editProject" data-toggle="modal" title="修改">' +
                 '<i class="iconfont iconxiugai-copy"></i> ' +
@@ -354,87 +391,105 @@
             },
             events: {
               "click a[title=删除]": function (e, value, row, index) {
-                if (confirm("此操作不可逆，请确认是否删除？")) {
-                  $.ajax();
+                var r = confirm("确定要删除吗!");
+                if (r == true) {
+                  axios({
+                    method: "post",
+                    headers: {
+                      "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    url: "/appearance/delete",
+                    params: {
+                      id: row.ID,
+                    },
+                  }).then((res) => {
+                    if (res.data == 200) {
+                      location.reload();
+                    } else {
+                      console.log("无权限");
+                    }
+                  });
+                } else {
+                  console.log("已取消");
                 }
               },
-              "click a[title=修改]": function (e, value, row, index) {},
+              "click a[title=修改]": function (e, value, row, index) {
+                GlobalID = row.ID;
+                dialog_appearance.open();
+              },
             },
           },
         ], //列设置
       });
 
       var dialog_appearance = new mdui.Dialog("#dialog_appearance");
-      // method
-      document.getElementById("open").addEventListener("click", function () {
-        dialog_appearance.open();
-      });
       var dialog = document.getElementById("dialog_appearance");
-
-      dialog.addEventListener("open.mdui.dialog", function () {
-        console.log("open");
-      });
-
-      dialog.addEventListener("close.mdui.dialog", function () {
-        console.log("close");
-      });
       //新增
       var add_appearance = document.getElementById("btn_add_appearance");
-      add_appearance.addEventListener("click", function () {
-        let url = document.getElementById("input_add_appearance_url").value;
-        let type = document.getElementById("input_add_appearance_type").value;
-        var r = confirm("确定要新增吗!");
-        if (r == true) {
-          axios({
-            method: "post",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            url: "/appearance/add",
-            params: {
-              type,
-              url,
-            },
-          }).then((res) => {
-            if (res.data == 200) {
-              location.reload();
-            } else {
-              console.log("无权限");
-            }
-          });
-        } else {
-          console.log("已取消");
-        }
-      });
-      //删除
-      var r = confirm("确定要删除吗!");
-      if (r == true) {
-        axios({
-          method: "post",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          url: "/appearance/add",
-          params: {
-            type,
-            url,
-          },
-        }).then((res) => {
-          if (res.data == 200) {
-            location.reload();
+      add_appearance.addEventListener(
+        "click",
+        function () {
+          let url = document.getElementById("input_add_appearance_url").value;
+          let type = document.getElementById("input_add_appearance_type").value;
+          var r = confirm("确定要新增吗!");
+          if (r == true) {
+            axios({
+              method: "post",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              url: "/appearance/add",
+              params: {
+                type,
+                url,
+              },
+            }).then((res) => {
+              if (res.data == 200) {
+                location.reload();
+              } else {
+                console.log("无权限");
+              }
+            });
           } else {
-            console.log("无权限");
+            console.log("已取消");
+          }
+        },
+        false
+      );
+      //修改
+      var btn_post_appearance_modify = document
+        .getElementById("  btn_post_appearance_modify")
+        .addEventListener("click", function () {
+          let type = getElementById("input_modify_appearance_type").value;
+          let url = getElementById("input_modify_appearance_url").value;
+          if (type && url) {
+            axios({
+              method: "post",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              url: "/appearance/modify",
+              params: {
+                id: GlobalID,
+                type,
+                url,
+              },
+            }).then((res) => {
+              if (res.data == 200) {
+                location.reload();
+              } else {
+                console.log("无权限");
+              }
+            });
+          } else {
+            alert("不许为空，哼！");
           }
         });
-      } else {
-        console.log("已取消");
-      }
-      //修改
     </script>
 
     <script>
       //装饰品列表
       $("#table-request-decoration").bootstrapTable({
-        url: "", //请求后台的URL（*）
-        method: "get", //请求方式（*）
+        url: "/decoration/get-list",
+        method: "get",
         responseHandler: function (res) {
-          console.log(res);
+          console.log(res.Data);
           return res.Data;
         },
         toolbar: "#toolbar",
@@ -459,7 +514,7 @@
             title: "ID",
           },
           {
-            field: "NAME",
+            field: "Name",
             title: "叫啥",
           },
           {
@@ -472,10 +527,7 @@
             align: "center",
             valign: "middle",
             width: "120",
-            // visible: false,
             formatter: function (value, row, index) {
-              // var sid_code = base64encode(row.sid + '');   //  sid 加密处理
-              // alert(sid_code);
               return (
                 '<a href="#editProject" data-toggle="modal" title="修改">' +
                 '<i class="iconfont iconxiugai-copy"></i> ' +
@@ -487,42 +539,51 @@
             },
             events: {
               "click a[title=删除]": function (e, value, row, index) {
-                if (confirm("此操作不可逆，请确认是否删除？")) {
-                  $.ajax();
+                var r = confirm("确定要删除吗!");
+                if (r == true) {
+                  axios({
+                    method: "post",
+                    headers: {
+                      "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    url: "/appearance/delete",
+                    params: {
+                      id: row.ID,
+                    },
+                  }).then((res) => {
+                    if (res.data == 200) {
+                      location.reload();
+                    } else {
+                      console.log("无权限");
+                    }
+                  });
+                } else {
+                  console.log("已取消");
                 }
               },
-              "click a[title=修改]": function (e, value, row, index) {},
+              "click a[title=修改]": function (e, value, row, index) {
+                GlobalID = row.ID;
+                dialog_decoration.open();
+              },
             },
           },
         ], //列设置
       });
       var dialog_decoration = new mdui.Dialog("#dialog_decoration");
-      // method
-      document.getElementById("open").addEventListener("click", function () {
-        dialog_decoration.open();
-      });
       var dialog = document.getElementById("dialog_decoration");
-
-      dialog.addEventListener("open.mdui.dialog", function () {
-        console.log("open");
-      });
-
-      dialog.addEventListener("close.mdui.dialog", function () {
-        console.log("close");
-      });
       //新增
-      var add_appearance = document.getElementById("btn_add_appearance");
-      add_appearance.addEventListener("click", function () {
-        let url = document.getElementById("input_add_appearance_url").value;
-        let type = document.getElementById("input_add_appearance_type").value;
+      var add_decoration = document.getElementById("btn_add_decoration");
+      add_decoration.addEventListener("click", function () {
+        let url = document.getElementById("input_add_decoration_url").value;
+        let name = document.getElementById("input_add_decoration_name").value;
         var r = confirm("确定要新增吗!");
         if (r == true) {
           axios({
             method: "post",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            url: "/appearance/add",
+            url: "/decoration/add",
             params: {
-              type,
+              name,
               url,
             },
           }).then((res) => {
@@ -536,34 +597,41 @@
           console.log("已取消");
         }
       });
-      //删除
-      var r = confirm("确定要删除吗!");
-      if (r == true) {
-        axios({
-          method: "post",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          url: "/appearance/add",
-          params: {
-            type,
-            url,
-          },
-        }).then((res) => {
-          if (res.data == 200) {
-            location.reload();
+
+      var btn_post_decoration_modify = document
+        .getElementById("  btn_post_decoration_modify")
+        .addEventListener("click", function () {
+          let type = getElementById("input_modify_decoration_type").value;
+          let url = getElementById("input_modify_decoration_url").value;
+          if (type && url) {
+            axios({
+              method: "post",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              url: "/decoration/modify",
+              params: {
+                id: GlobalID,
+                type,
+                url,
+              },
+            }).then((res) => {
+              if (res.data == 200) {
+                location.reload();
+              } else {
+                console.log("无权限");
+              }
+            });
           } else {
-            console.log("无权限");
+            alert("不许为空，哼！");
           }
         });
-      } else {
-        console.log("已取消");
-      }
+      //删除
     </script>
 
     <script>
       //背景列表
       $("#table-request-background").bootstrapTable({
-        url: "", //请求后台的URL（*）
-        method: "get", //请求方式（*）
+        url: "/background/get-list",
+        method: "get",
         responseHandler: function (res) {
           console.log(res);
           return res.Data;
@@ -590,7 +658,7 @@
             title: "ID",
           },
           {
-            field: "NAME",
+            field: "Name",
             title: "名字",
           },
           {
@@ -603,10 +671,7 @@
             align: "center",
             valign: "middle",
             width: "120",
-            // visible: false,
             formatter: function (value, row, index) {
-              // var sid_code = base64encode(row.sid + '');   //  sid 加密处理
-              // alert(sid_code);
               return (
                 '<a href="#editProject" data-toggle="modal" title="修改">' +
                 '<i class="iconfont iconxiugai-copy"></i> ' +
@@ -618,42 +683,50 @@
             },
             events: {
               "click a[title=删除]": function (e, value, row, index) {
-                if (confirm("此操作不可逆，请确认是否删除？")) {
-                  $.ajax();
+                var r = confirm("确定要删除吗!");
+                if (r == true) {
+                  axios({
+                    method: "post",
+                    headers: {
+                      "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    url: "/appearance/add",
+                    params: {
+                      id: row.ID,
+                    },
+                  }).then((res) => {
+                    if (res.data == 200) {
+                      location.reload();
+                    } else {
+                      console.log("无权限");
+                    }
+                  });
+                } else {
+                  console.log("已取消");
                 }
               },
-              "click a[title=修改]": function (e, value, row, index) {},
+              "click a[title=修改]": function (e, value, row, index) {
+                GlobalID = row.ID;
+                dialog_background.open();
+              },
             },
           },
         ], //列设置
       });
 
-      var dialog_appearance = new mdui.Dialog("#dialog_background");
-      // method
-      document.getElementById("open").addEventListener("click", function () {
-        dialog_background.open();
-      });
+      var dialog_background = new mdui.Dialog("#dialog_background");
       var dialog = document.getElementById("dialog_background");
-
-      dialog.addEventListener("open.mdui.dialog", function () {
-        console.log("open");
-      });
-
-      dialog.addEventListener("close.mdui.dialog", function () {
-        console.log("close");
-      });
-
       //新增
-      var add_appearance = document.getElementById("btn_add_appearance");
-      add_appearance.addEventListener("click", function () {
-        let url = document.getElementById("input_add_appearance_url").value;
-        let type = document.getElementById("input_add_appearance_type").value;
+      var add_background = document.getElementById("btn_add_background");
+      add_background.addEventListener("click", function () {
+        let url = document.getElementById("input_add_background_url").value;
+        let type = document.getElementById("input_add_background_type").value;
         var r = confirm("确定要新增吗!");
         if (r == true) {
           axios({
             method: "post",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            url: "/appearance/add",
+            url: "/background/add",
             params: {
               type,
               url,
@@ -669,27 +742,33 @@
           console.log("已取消");
         }
       });
-      //删除
-      var r = confirm("确定要删除吗!");
-      if (r == true) {
-        axios({
-          method: "post",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          url: "/appearance/add",
-          params: {
-            type,
-            url,
-          },
-        }).then((res) => {
-          if (res.data == 200) {
-            location.reload();
+
+      var btn_post_background_modify = document
+        .getElementById("  btn_post_background_modify")
+        .addEventListener("click", function () {
+          let type = getElementById("input_modify_background_type").value;
+          let url = getElementById("input_modify_background_url").value;
+          if (type && url) {
+            axios({
+              method: "post",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              url: "/background/modify",
+              params: {
+                id: GlobalID,
+                type,
+                url,
+              },
+            }).then((res) => {
+              if (res.data == 200) {
+                location.reload();
+              } else {
+                console.log("无权限");
+              }
+            });
           } else {
-            console.log("无权限");
+            alert("不许为空，哼！");
           }
         });
-      } else {
-        console.log("已取消");
-      }
     </script>
   </body>
 </html>

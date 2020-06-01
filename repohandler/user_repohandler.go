@@ -86,8 +86,8 @@ func GetClassmateList(college string, major string, class string) *[]models.User
 
 //SearchUserList 返回模糊搜索的列表
 func SearchUserList(content string) *[]models.Users {
-	var result *[]models.Users
-	err := db.Model(&result).Where("").Select("id, name,college,major,class,person,myimg").Find(&result).RowsAffected
+	var result = new([]models.Users)
+	err := db.Raw("SELECT id, name,college,major,class,myimg FROM user WHERE concat(name,college,major,class)  like ?", "%"+content+"%").Scan(&result).RowsAffected
 	if err > 0 {
 		return result
 	} else {
@@ -95,6 +95,7 @@ func SearchUserList(content string) *[]models.Users {
 	}
 }
 
+//
 //GetMyFriendsList 获取某个用户的朋友列表
 func GetMyFriendsList(myid string) *[]models.Users {
 	var result = new([]models.Users)

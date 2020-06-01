@@ -18,12 +18,14 @@ func Login(ctx iris.Context) {
 		result := util.GetReturnData(nil, "FAILED")
 		ctx.JSON(result)
 	}
-	// // 保存登录态
+	// 保存登录态
 	USERID := util.GetSHAEncode(wxLoginResp.OpenID)
 	//接下来需要验证数据库中是否存在该USER_ID
 	list := repohandler.VerifyHasThisUserID(USERID)
 	if list.USERID == "" { //不存在该用户
-		repohandler.CreateUser(USERID)
+		userinfo := repohandler.CreateUser(USERID)
+		result := util.GetReturnData(userinfo, "SUCCESS")
+		ctx.JSON(result)
 	} else {
 		result := util.GetReturnData(list, "SUCCESS")
 		ctx.JSON(result)
@@ -98,5 +100,12 @@ func MakeFriends(ctx iris.Context) {
 	// list := repohandler.MakeFriends(myid, friendid)
 	repohandler.MakeFriends(myid, friendid)
 	result := util.GetReturnData(nil, "SUCCESS")
+	ctx.JSON(result)
+}
+
+func SearchUser(ctx iris.Context) {
+	content := ctx.URLParam("content")
+	list := repohandler.SearchUserList(content)
+	result := util.GetReturnData(list, "SUCCESS")
 	ctx.JSON(result)
 }

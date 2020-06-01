@@ -1,15 +1,14 @@
 {
-  
-    "Port": ":8848",
+    "Port": ":80",
     "AppID":"AppID",
     "SecretKeyWx":"SecretKeyWx",
     "AccessKeyQn ":"AccessKeyQn ",
     "SecretKeyQn":"SecretKeyQn",
     "BucketName":"BucketName",
-    "DBUserName": "debian-sys-maint",
-    "DBPassword": "376A03DSrWU0akjN",
+    "DBUserName": "root",
+    "DBPassword": "",
     "DBIp": "127.0.0.1",
     "DBPort": "3306",
-    "DBName": "test2",
-   "UserToken":"10156966b8dcf3f31674fc57c17fc39462218d05"
+    "DBName": "mindazepeto",
+   "UserToken":""
   }

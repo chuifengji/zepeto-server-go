@@ -1,13 +1,25 @@
 package main
 
 import (
+	"MindaZepeto/config"
 	"MindaZepeto/controllers"
 
 	"github.com/kataras/iris"
 )
 
+func Cors(ctx iris.Context) {
+	ctx.Header("Access-Control-Allow-Origin", "*")
+	if ctx.Request().Method == "OPTIONS" {
+		ctx.Header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,PATCH,OPTIONS")
+		ctx.Header("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization")
+		ctx.StatusCode(204)
+		return
+	}
+	ctx.Next()
+}
 func main() {
 	app := iris.New()
+	app.Use(Cors)
 	app.RegisterView(iris.HTML("./views", ".html"))
 	app.Get("/admin", controllers.Admin)
 	app.Get("/admin/login", controllers.AdminLogin)
@@ -38,12 +50,12 @@ func main() {
 		personal.Post("/insert-personal-info", controllers.UpdatePersonalInfo)
 		personal.Post("/update-personal-image", controllers.UpdatePersonalImage)
 		personal.Post("/makeFriends", controllers.MakeFriends)
+		personal.Post("/get-search-list", controllers.SearchUser)
 		personal.Get("/get-friends-list", controllers.GetFriendsList)
 		personal.Get("/get-self-info", controllers.GetSelfInfo)
 		personal.Get("/get-classmates-list", controllers.GetClassmateList)
 		personal.Get("/get-all-user-info", controllers.GetAllUserInfo)
-
 	})
 
-	app.Run(iris.Addr(":8081"))
+	app.Run(iris.Addr(config.Sysconfig.Port))
 }
