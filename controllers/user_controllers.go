@@ -39,10 +39,17 @@ func UpdatePersonalInfo(ctx iris.Context) {
 	college := ctx.URLParam("college")
 	major := ctx.URLParam("major")
 	class := ctx.URLParam("class")
-	list := repohandler.UpdateInfo(userid, name, college, major, class)
+	canSearchMe := ctx.URLParam("canSearchMe")
+	list := repohandler.UpdateInfo(userid, name, college, major, class, canSearchMe)
 	result := util.GetReturnData(list, "SUCCESS")
 	ctx.JSON(result)
-
+}
+func CanSearchMe(ctx iris.Context) {
+	userid := ctx.URLParam("user_id")
+	canSearchMe := ctx.URLParam("canSearchMe")
+	list := repohandler.CanSearchMe(userid, canSearchMe)
+	result := util.GetReturnData(list, "SUCCESS")
+	ctx.JSON(result)
 }
 
 //UpdatePersonalImage 更新个人形象图片

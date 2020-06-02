@@ -9,9 +9,7 @@ import (
 var Sysconfig = &sysconfig{}
 
 func init() {
-	// path, _ := filepath.Abs("./config/config.json")
-	// fmt.Println(path)
-	b, err := ioutil.ReadFile("./config.json") ///root/server/mindazepeto/config.json 线上版路径
+	b, err := ioutil.ReadFile("./config.json")
 	if err != nil {
 		panic(err)
 	} else {

@@ -205,9 +205,9 @@
           <input
             class="mdui-textfield-input"
             type="text"
-            placeholder="TYPE"
+            placeholder="NAME"
             value=""
-            id="input_add_background_type"
+            id="input_add_background_name"
           />
         </div>
         <div class="mdui-textfield" style="width: 240px; padding-right: 60px;">
@@ -237,9 +237,9 @@
         <div class="mdui-textfield" style="padding: 20px;">
           <input
             class="mdui-textfield-input"
-            id="input_modify_background_type"
+            id="input_modify_background_name"
             type="text"
-            placeholder="TYPE"
+            placeholder="NAME"
           />
         </div>
 
@@ -456,7 +456,7 @@
       );
       //修改
       var btn_post_appearance_modify = document
-        .getElementById("  btn_post_appearance_modify")
+        .getElementById("btn_post_appearance_modify")
         .addEventListener("click", function () {
           let type = getElementById("input_modify_appearance_type").value;
           let url = getElementById("input_modify_appearance_url").value;
@@ -546,7 +546,7 @@
                     headers: {
                       "Content-Type": "application/x-www-form-urlencoded",
                     },
-                    url: "/appearance/delete",
+                    url: "/decoration/delete",
                     params: {
                       id: row.ID,
                     },
@@ -599,7 +599,7 @@
       });
 
       var btn_post_decoration_modify = document
-        .getElementById("  btn_post_decoration_modify")
+        .getElementById("btn_post_decoration_modify")
         .addEventListener("click", function () {
           let type = getElementById("input_modify_decoration_type").value;
           let url = getElementById("input_modify_decoration_url").value;
@@ -610,7 +610,7 @@
               url: "/decoration/modify",
               params: {
                 id: GlobalID,
-                type,
+                name,
                 url,
               },
             }).then((res) => {
@@ -690,7 +690,7 @@
                     headers: {
                       "Content-Type": "application/x-www-form-urlencoded",
                     },
-                    url: "/appearance/add",
+                    url: "/background/delete",
                     params: {
                       id: row.ID,
                     },
@@ -720,7 +720,7 @@
       var add_background = document.getElementById("btn_add_background");
       add_background.addEventListener("click", function () {
         let url = document.getElementById("input_add_background_url").value;
-        let type = document.getElementById("input_add_background_type").value;
+        let name = document.getElementById("input_add_background_name").value;
         var r = confirm("确定要新增吗!");
         if (r == true) {
           axios({
@@ -728,7 +728,7 @@
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             url: "/background/add",
             params: {
-              type,
+              name,
               url,
             },
           }).then((res) => {
@@ -744,9 +744,9 @@
       });
 
       var btn_post_background_modify = document
-        .getElementById("  btn_post_background_modify")
+        .getElementById("btn_post_background_modify")
         .addEventListener("click", function () {
-          let type = getElementById("input_modify_background_type").value;
+          let type = getElementById("input_modify_background_name").value;
           let url = getElementById("input_modify_background_url").value;
           if (type && url) {
             axios({
@@ -755,7 +755,7 @@
               url: "/background/modify",
               params: {
                 id: GlobalID,
-                type,
+                name,
                 url,
               },
             }).then((res) => {

@@ -20,9 +20,19 @@ func CreateUser(USERID string) models.User {
 }
 
 //UpdateInfo 更新个人信息
-func UpdateInfo(userid string, name string, college string, major string, class string) *models.User {
+func UpdateInfo(userid string, name string, college string, major string, class string, canSearchMe string) *models.User {
 	result := new(models.User) //更新之后并没有返回最新的值，而是返回的修改对象本身，所以还得自己重新查询。
-	err := db.Table("user").Where("user_id = ?", userid).Updates(map[string]interface{}{"NAME": name, "MAJOR": major, "COLLEGE": college, "CLASS": class}).RowsAffected
+	err := db.Table("user").Where("user_id = ?", userid).Updates(map[string]interface{}{"NAME": name, "MAJOR": major, "COLLEGE": college, "CLASS": class, "CanSearchMe": canSearchMe}).RowsAffected
+	if err > 0 {
+		db.Table("user").Where("user_id = ?", userid).First(&result)
+		return result
+	} else {
+		return nil
+	}
+}
+func CanSearchMe(userid string, canSearchMe string) *models.User {
+	result := new(models.User)
+	err := db.Table("user").Where("user_id = ?", userid).Update("can_search_me", canSearchMe).RowsAffected
 	if err > 0 {
 		db.Table("user").Where("user_id = ?", userid).First(&result)
 		return result
@@ -87,7 +97,7 @@ func GetClassmateList(college string, major string, class string) *[]models.User
 //SearchUserList 返回模糊搜索的列表
 func SearchUserList(content string) *[]models.Users {
 	var result = new([]models.Users)
-	err := db.Raw("SELECT id, name,college,major,class,myimg FROM user WHERE concat(name,college,major,class)  like ?", "%"+content+"%").Scan(&result).RowsAffected
+	err := db.Raw("SELECT id, name,college,major,class,myimg FROM user WHERE concat(name,college,major,class)  like ?  AND can_search_me=true", "%"+content+"%").Scan(&result).RowsAffected
 	if err > 0 {
 		return result
 	} else {

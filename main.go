@@ -47,14 +47,15 @@ func main() {
 
 	app.PartyFunc("/personal", func(personal iris.Party) {
 		personal.Get("/login", controllers.Login)
-		personal.Post("/insert-personal-info", controllers.UpdatePersonalInfo)
-		personal.Post("/update-personal-image", controllers.UpdatePersonalImage)
-		personal.Post("/makeFriends", controllers.MakeFriends)
-		personal.Post("/get-search-list", controllers.SearchUser)
+		personal.Get("/insert-personal-info", controllers.UpdatePersonalInfo)
+		personal.Get("/update-personal-image", controllers.UpdatePersonalImage)
+		personal.Get("/makeFriends", controllers.MakeFriends)
+		personal.Get("/get-search-list", controllers.SearchUser)
 		personal.Get("/get-friends-list", controllers.GetFriendsList)
 		personal.Get("/get-self-info", controllers.GetSelfInfo)
 		personal.Get("/get-classmates-list", controllers.GetClassmateList)
 		personal.Get("/get-all-user-info", controllers.GetAllUserInfo)
+		personal.Get("/update-personal-cansearchme", controllers.CanSearchMe)
 	})
 
 	app.Run(iris.Addr(config.Sysconfig.Port))

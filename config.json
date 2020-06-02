@@ -1,7 +1,7 @@
 {
     "Port": ":80",
-    "AppID":"AppID",
-    "SecretKeyWx":"SecretKeyWx",
+    "AppID":"",
+    "SecretKeyWx":"",
     "AccessKeyQn ":"AccessKeyQn ",
     "SecretKeyQn":"SecretKeyQn",
     "BucketName":"BucketName",
