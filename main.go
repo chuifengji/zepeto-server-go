@@ -56,6 +56,7 @@ func main() {
 		personal.Get("/get-classmates-list", controllers.GetClassmateList)
 		personal.Get("/get-all-user-info", controllers.GetAllUserInfo)
 		personal.Get("/update-personal-cansearchme", controllers.CanSearchMe)
+		personal.Get("/getUptoken", controllers.GetUptoken)
 	})
 
 	app.Run(iris.Addr(config.Sysconfig.Port))

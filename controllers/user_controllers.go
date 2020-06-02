@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"MindaZepeto/config"
+	"MindaZepeto/qiniu"
 	"MindaZepeto/repohandler"
 	"MindaZepeto/util"
 	"MindaZepeto/wxlogin"
@@ -113,6 +114,12 @@ func MakeFriends(ctx iris.Context) {
 func SearchUser(ctx iris.Context) {
 	content := ctx.URLParam("content")
 	list := repohandler.SearchUserList(content)
+	result := util.GetReturnData(list, "SUCCESS")
+	ctx.JSON(result)
+}
+func GetUptoken(ctx iris.Context) {
+	fileName := ctx.URLParam("fileName")
+	list := qiniu.GetUptoken(fileName)
 	result := util.GetReturnData(list, "SUCCESS")
 	ctx.JSON(result)
 }

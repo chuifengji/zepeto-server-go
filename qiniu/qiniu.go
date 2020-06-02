@@ -8,7 +8,7 @@ import (
 	"github.com/qiniu/api.v7/v7/storage"
 )
 
-func getUptoken(fileName string) string {
+func GetUptoken(fileName string) string {
 	accessKey := config.Sysconfig.AccessKeyQn
 	secretKey := config.Sysconfig.SecretKeyQn
 	bucket := config.Sysconfig.BucketName
