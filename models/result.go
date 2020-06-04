@@ -1,5 +1,6 @@
 package models
 
+//Result 结果
 type Result struct {
 	Code int
 	Msg  string

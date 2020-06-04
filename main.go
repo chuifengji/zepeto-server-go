@@ -39,9 +39,9 @@ func main() {
 	})
 
 	app.PartyFunc("/appearance", func(appearance iris.Party) {
-		appearance.Post("/add", controllers.AddAppearance)
-		appearance.Post("/delete", controllers.DeleteAppearance)
-		appearance.Post("/modify", controllers.ModifyAppearance)
+		// appearance.Post("/add", controllers.AddAppearance)
+		// appearance.Post("/delete", controllers.DeleteAppearance)
+		// appearance.Post("/modify", controllers.ModifyAppearance)
 		appearance.Get("/get-list", controllers.GetAppearanceList)
 	})
 

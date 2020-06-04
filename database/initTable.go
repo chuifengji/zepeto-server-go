@@ -10,6 +10,15 @@ func Createtable() {
 		&models.Friends{},
 		&models.Decoration{},
 		&models.Background{},
-		&models.Appearance{},
+		&models.Expression{},
+		&models.Feature{},
+		&models.Glasses{},
+		&models.Hair{},
+		&models.Shirt{},
+		&models.Shoes{},
+		&models.Trousers{},
+		&models.Overcoat{},
+		&models.Others{},
+		&models.Grouphoto{},
 	)
 }
