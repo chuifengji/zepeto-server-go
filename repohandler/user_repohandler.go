@@ -97,7 +97,7 @@ func GetClassmateList(college string, major string, class string) *[]models.User
 //SearchUserList 返回模糊搜索的列表
 func SearchUserList(content string) *[]models.Users {
 	var result = new([]models.Users)
-	err := db.Raw("SELECT id, name,college,major,class,myimg FROM user WHERE concat(name,college,major,class)  like ?  AND can_search_me=`true`", "%"+content+"%").Scan(&result).RowsAffected
+	err := db.Raw("SELECT id, name,college,major,class,myimg FROM user WHERE concat(name,college,major)  like ?  AND can_search_me='true' ", "%"+content+"%").Scan(&result).RowsAffected
 	if err > 0 {
 		return result
 	} else {
