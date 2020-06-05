@@ -5,10 +5,10 @@
     "AccessKeyQn ":"AccessKeyQn ",
     "SecretKeyQn":"SecretKeyQn",
     "BucketName":"BucketName",
-    "DBUserName": "debian-sys-maint",
-    "DBPassword": "376A03DSrWU0akjN",
+    "DBUserName": "",
+    "DBPassword": "",
     "DBIp": "127.0.0.1",
     "DBPort": "3306",
-    "DBName": "mindazepeto",
+    "DBName": "",
    "UserToken":""
   }
