@@ -22,19 +22,19 @@ var db = database.GetDB()
 // 	db.Model(models.Appearance{}).Where("ID = ?", id).Update(&appearance)
 
 // }
+type ResultList struct {
+	FeatureList    []models.Feature
+	HairList       []models.Hair
+	ExpressionList []models.Expression
+	OvercoatList   []models.Overcoat
+	ShirtList      []models.Shirt
+	TrousersList   []models.Trousers
+	ShoesList      []models.Shoes
+	GlassesList    []models.Glasses
+	OthersList     []models.Others
+}
 
-func GetAppearanceList() interface{} {
-	type ResultList struct {
-		featureList    *[]models.Feature
-		hairList       *[]models.Hair
-		expressionList *[]models.Expression
-		overcoatList   *[]models.Overcoat
-		shirtList      *[]models.Shirt
-		trousersList   *[]models.Trousers
-		shoesList      *[]models.Shoes
-		glassesList    *[]models.Glasses
-		othersList     *[]models.Others
-	}
+func GetAppearanceList() *ResultList {
 	featureList := new([]models.Feature)
 	hairList := new([]models.Hair)
 	expressionList := new([]models.Expression)
@@ -44,25 +44,25 @@ func GetAppearanceList() interface{} {
 	shoesList := new([]models.Shoes)
 	glassesList := new([]models.Glasses)
 	othersList := new([]models.Others)
-	db.Raw(`select * FROM feature`).Scan(featureList)
-	db.Raw(`select * FROM hair`).Scan(hairList)
-	db.Raw(`select * FROM expression`).Scan(expressionList)
-	db.Raw(`select * FROM overcoat`).Scan(overcoatList)
-	db.Raw(`select * FROM shirt`).Scan(shirtList)
-	db.Raw(`select * FROM trousers`).Scan(trousersList)
-	db.Raw(`select * FROM shoes`).Scan(shoesList)
-	db.Raw(`select * FROM glasses`).Scan(glassesList)
-	db.Raw(`select * FROM others`).Scan(othersList)
+	db.Raw(`select * FROM feature`).Scan(&featureList)
+	db.Raw(`select * FROM hair`).Scan(&hairList)
+	db.Raw(`select * FROM expression`).Scan(&expressionList)
+	db.Raw(`select * FROM overcoat`).Scan(&overcoatList)
+	db.Raw(`select * FROM shirt`).Scan(&shirtList)
+	db.Raw(`select * FROM trousers`).Scan(&trousersList)
+	db.Raw(`select * FROM shoes`).Scan(&shoesList)
+	db.Raw(`select * FROM glasses`).Scan(&glassesList)
+	db.Raw(`select * FROM others`).Scan(&othersList)
 	resultlist := &ResultList{
-		featureList,
-		hairList,
-		expressionList,
-		overcoatList,
-		shirtList,
-		trousersList,
-		shoesList,
-		glassesList,
-		othersList,
+		*featureList,
+		*hairList,
+		*expressionList,
+		*overcoatList,
+		*shirtList,
+		*trousersList,
+		*shoesList,
+		*glassesList,
+		*othersList,
 	}
 	return resultlist
 }
