@@ -123,3 +123,35 @@ func GetUptoken(ctx iris.Context) {
 	result := util.GetReturnData(list, "SUCCESS")
 	ctx.JSON(result)
 }
+
+func AddGroupPhoto(ctx iris.Context) {
+	iduser := ctx.URLParam("iduser")
+	userid := ctx.URLParam("userid")
+	location := ctx.URLParam("location")
+	url := ctx.URLParam("url")
+	thumbnail := ctx.URLParam("thumbnail")
+	tableName := util.GetGroupPhotoTableName(iduser)
+	list := repohandler.AddGroupPhoto(userid, location, url, tableName, thumbnail)
+	result := util.GetReturnData(list, "SUCCESS")
+	ctx.JSON(result)
+
+}
+func DeleteGroupPhoto(ctx iris.Context) {
+	iduser := ctx.URLParam("iduser")
+	idimg := ctx.URLParam("idimg")
+	userid := ctx.URLParam("userid")
+
+	tableName := util.GetGroupPhotoTableName(iduser)
+	list := repohandler.DeleteGroupPhoto(tableName, idimg, userid)
+	result := util.GetReturnData(list, "SUCCESS")
+	ctx.JSON(result)
+}
+
+func GetMyPhotos(ctx iris.Context) {
+	iduser := ctx.URLParam("iduser")
+	userid := ctx.URLParam("userid")
+	tableName := util.GetGroupPhotoTableName(iduser)
+	list := repohandler.GetMyPhotos(userid, tableName)
+	result := util.GetReturnData(list, "SUCCESS")
+	ctx.JSON(result)
+}

@@ -3,7 +3,7 @@ package models
 //User USERID 也应该是primary_key
 type User struct {
 	ID          int    `gorm:"primary_key"`
-	USERID      string `gorm:"type:varchar(50)"`
+	USERID      string `gorm:"type:varchar(70);index"`
 	NAME        string `gorm:"type:varchar(20)"`
 	COLLEGE     string `gorm:"type:varchar(20)"`
 	MAJOR       string `gorm:"type:varchar(20)"`

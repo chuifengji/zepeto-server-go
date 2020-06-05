@@ -57,6 +57,9 @@ func main() {
 		personal.Get("/get-all-user-info", controllers.GetAllUserInfo)
 		personal.Get("/update-personal-cansearchme", controllers.CanSearchMe)
 		personal.Get("/getUptoken", controllers.GetUptoken)
+		personal.Get("/addGroupPhoto", controllers.AddGroupPhoto)
+		personal.Get("/deleteGroupPhoto", controllers.DeleteGroupPhoto)
+		personal.Get("/getMyPhotos", controllers.GetMyPhotos)
 	})
 
 	app.Run(iris.Addr(config.Sysconfig.Port))

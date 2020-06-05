@@ -2,7 +2,7 @@ package models
 
 //Friends 这golint管的还真宽
 type Friends struct {
-	MyID     string `gorm:"type:varchar(10);not null;"`
+	MyID     string `gorm:"type:varchar(10);not null;index"`
 	FriendID string `gorm:"type:varchar(10);not null;"`
 }
 

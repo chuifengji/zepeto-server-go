@@ -117,3 +117,41 @@ func GetAllUserList() *[]models.Users {
 	db.Raw("SELECT id,name,college,major,class,myimg FROM user").Scan(&result)
 	return result
 }
+
+//AddGroupPhoto 向指定表中添加图片
+func AddGroupPhoto(userid string, location string, url string, tableName string, thumbnail string) *[]models.Grouphotoend {
+	photo := models.Grouphotoend{
+		USERID:    userid,
+		LOCATION:  location,
+		URL:       url,
+		THUMBNAIL: thumbnail,
+	}
+	result := new([]models.Grouphotoend)
+	err := db.Table(tableName).Create(&photo).RowsAffected
+	if err > 0 {
+		db.Table(tableName).Where("user_id = ?", userid).Find(&result)
+		return result
+	} else {
+		return nil
+	}
+}
+
+//DeleteGroupPhoto 删除某用户的某张图片
+func DeleteGroupPhoto(tableName string, idimg string, userid string) *[]models.Grouphotoend {
+	nouse := new([]models.Grouphotoend)
+	db.Raw("DELETE FROM " + tableName + " WHERE user_id = " + userid + "  AND  id = " + idimg).Scan(&nouse)
+	result := new([]models.Grouphotoend)
+	db.Table(tableName).Where("user_id = ?", userid).Find(&result)
+	return result
+}
+
+//GetMyPhotos 获取某用户的全部图片
+func GetMyPhotos(userid string, tableName string) *[]models.Grouphotoend {
+	result := new([]models.Grouphotoend)
+	err := db.Table(tableName).Where("user_id = ?", userid).Find(&result).RowsAffected
+	if err > 0 {
+		return result
+	} else {
+		return nil
+	}
+}
