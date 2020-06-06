@@ -7,13 +7,12 @@ import (
 //VerifyHasThisUserID 验证该ＵＳＥＲＩＤ是否已经注册过。
 func VerifyHasThisUserID(USERID string) models.User {
 	user := models.User{}
-	//	db.Where(models.User{USERID: USERID}).FirstOrInit(&user)
-	db.Where("user_id = ?", USERID).Find(&user)
+	db.Where("user_id = ?", USERID).First(&user)
 	return user
 }
 
 //CreateUser 新注册用户
-func CreateUser(USERID string) models.User {
+func CreateUser(USERID string) interface{} {
 	user := models.User{USERID: USERID}
 	db.Create(&user)
 	return user
@@ -86,7 +85,7 @@ func GetSelfInfo(userid string) *models.User {
 //GetClassmateList 获取某一个指定班级的所有成员信息,不应返回user_id这样隐私的数据。
 func GetClassmateList(college string, major string, class string) *[]models.Users {
 	var result = new([]models.Users)
-	err := db.Model(&result).Where("college = ? AND major = ? AND class=?", college, major, class).Select("id, name,college,major,class,person,myimg").Find(&result).RowsAffected
+	err := db.Raw("SELECT id,name,college,major,class,myimg FROM user WHERE college =?  AND major = ? AND class= ? ", college, major, class).Scan(&result).RowsAffected
 	if err > 0 {
 		return result
 	} else {
@@ -139,10 +138,14 @@ func AddGroupPhoto(userid string, location string, url string, tableName string,
 //DeleteGroupPhoto 删除某用户的某张图片
 func DeleteGroupPhoto(tableName string, idimg string, userid string) *[]models.Grouphotoend {
 	nouse := new([]models.Grouphotoend)
-	db.Raw("DELETE FROM " + tableName + " WHERE user_id = " + userid + "  AND  id = " + idimg).Scan(&nouse)
-	result := new([]models.Grouphotoend)
-	db.Table(tableName).Where("user_id = ?", userid).Find(&result)
-	return result
+	err := db.Raw("DELETE FROM ? WHERE user_id = ? AND  id = ? ", tableName, userid, idimg).Scan(&nouse).RowsAffected
+	if err > 0 {
+		result := new([]models.Grouphotoend)
+		db.Table(tableName).Where("user_id = ?", userid).Find(&result)
+		return result
+	} else {
+		return nil
+	}
 }
 
 //GetMyPhotos 获取某用户的全部图片
@@ -150,6 +153,17 @@ func GetMyPhotos(userid string, tableName string) *[]models.Grouphotoend {
 	result := new([]models.Grouphotoend)
 	err := db.Table(tableName).Where("user_id = ?", userid).Find(&result).RowsAffected
 	if err > 0 {
+		return result
+	} else {
+		return nil
+	}
+}
+
+func DeleteFriend(myid string, friendid string) *[]models.Users {
+	nouse := new(models.Friends)
+	err := db.Raw("DELETE FROM friends WHERE my_id = ? AND friend_id = ? ", myid, friendid).Scan(&nouse).RowsAffected
+	if err > 0 {
+		result := GetMyFriendsList(myid)
 		return result
 	} else {
 		return nil

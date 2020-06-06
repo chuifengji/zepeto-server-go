@@ -105,9 +105,8 @@ func GetAllUserInfo(ctx iris.Context) {
 func MakeFriends(ctx iris.Context) {
 	myid := ctx.URLParam("myid")
 	friendid := ctx.URLParam("friendid")
-	// list := repohandler.MakeFriends(myid, friendid)
-	repohandler.MakeFriends(myid, friendid)
-	result := util.GetReturnData(nil, "SUCCESS")
+	list := repohandler.MakeFriends(myid, friendid)
+	result := util.GetReturnData(list, "SUCCESS")
 	ctx.JSON(result)
 }
 
@@ -152,6 +151,15 @@ func GetMyPhotos(ctx iris.Context) {
 	userid := ctx.URLParam("userid")
 	tableName := util.GetGroupPhotoTableName(iduser)
 	list := repohandler.GetMyPhotos(userid, tableName)
+	result := util.GetReturnData(list, "SUCCESS")
+	ctx.JSON(result)
+}
+
+//DeleteFriend 删除朋友
+func DeleteFriend(ctx iris.Context) {
+	myid := ctx.URLParam("myid")
+	friendid := ctx.URLParam("friendid")
+	list := repohandler.DeleteFriend(myid, friendid)
 	result := util.GetReturnData(list, "SUCCESS")
 	ctx.JSON(result)
 }
