@@ -43,7 +43,7 @@ func CanSearchMe(userid string, canSearchMe string) *models.User {
 //UpdateSelfImage 更新个人形象照片
 func UpdateSelfImage(userid string, url string) *models.User {
 	result := new(models.User) //更新之后并没有返回最新的值，而是返回的修改对象本身，所以还得自己重新查询。
-	err := db.Table("user").Where("user_id = ?", userid).Update("url", url).RowsAffected
+	err := db.Table("user").Where("user_id = ?", userid).Update("myimg", url).RowsAffected
 	if err > 0 {
 		db.Table("user").Where("user_id = ?", userid).First(&result)
 		return result
@@ -118,12 +118,12 @@ func GetAllUserList() *[]models.Users {
 }
 
 //AddGroupPhoto 向指定表中添加图片
-func AddGroupPhoto(userid string, location string, url string, tableName string, thumbnail string) *[]models.Grouphotoend {
+func AddGroupPhoto(userid string, location string, time string, url string, tableName string) *[]models.Grouphotoend {
 	photo := models.Grouphotoend{
-		USERID:    userid,
-		LOCATION:  location,
-		URL:       url,
-		THUMBNAIL: thumbnail,
+		USERID:   userid,
+		LOCATION: location,
+		URL:      url,
+		TIME:     time,
 	}
 	result := new([]models.Grouphotoend)
 	err := db.Table(tableName).Create(&photo).RowsAffected
@@ -167,5 +167,15 @@ func DeleteFriend(myid string, friendid string) *[]models.Users {
 		return result
 	} else {
 		return nil
+	}
+}
+
+func DeleteAllPhotos(userid string, tableName string) string {
+	photos := new(models.Grouphotoend)
+	err := db.Table(tableName).Where("user_id = ?", userid).Delete(&photos).RowsAffected
+	if err > 0 {
+		return "success"
+	} else {
+		return "failed"
 	}
 }

@@ -116,6 +116,12 @@ func SearchUser(ctx iris.Context) {
 	result := util.GetReturnData(list, "SUCCESS")
 	ctx.JSON(result)
 }
+
+func GetUptokenPhotos(ctx iris.Context) {
+	list := qiniu.GetUptokenPhotos()
+	result := util.GetReturnData(list, "SUCCESS")
+	ctx.JSON(result)
+}
 func GetUptoken(ctx iris.Context) {
 	fileName := ctx.URLParam("fileName")
 	list := qiniu.GetUptoken(fileName)
@@ -127,10 +133,10 @@ func AddGroupPhoto(ctx iris.Context) {
 	iduser := ctx.URLParam("iduser")
 	userid := ctx.URLParam("userid")
 	location := ctx.URLParam("location")
+	time := ctx.URLParam("time")
 	url := ctx.URLParam("url")
-	thumbnail := ctx.URLParam("thumbnail")
 	tableName := util.GetGroupPhotoTableName(iduser)
-	list := repohandler.AddGroupPhoto(userid, location, url, tableName, thumbnail)
+	list := repohandler.AddGroupPhoto(userid, location, time, url, tableName)
 	result := util.GetReturnData(list, "SUCCESS")
 	ctx.JSON(result)
 
@@ -139,7 +145,6 @@ func DeleteGroupPhoto(ctx iris.Context) {
 	iduser := ctx.URLParam("iduser")
 	idimg := ctx.URLParam("idimg")
 	userid := ctx.URLParam("userid")
-
 	tableName := util.GetGroupPhotoTableName(iduser)
 	list := repohandler.DeleteGroupPhoto(tableName, idimg, userid)
 	result := util.GetReturnData(list, "SUCCESS")
@@ -160,6 +165,15 @@ func DeleteFriend(ctx iris.Context) {
 	myid := ctx.URLParam("myid")
 	friendid := ctx.URLParam("friendid")
 	list := repohandler.DeleteFriend(myid, friendid)
+	result := util.GetReturnData(list, "SUCCESS")
+	ctx.JSON(result)
+}
+
+func DeleteAllPhoto(ctx iris.Context) {
+	iduser := ctx.URLParam("iduser")
+	userid := ctx.URLParam("userid")
+	tableName := util.GetGroupPhotoTableName(iduser)
+	list := repohandler.DeleteAllPhotos(userid, tableName)
 	result := util.GetReturnData(list, "SUCCESS")
 	ctx.JSON(result)
 }

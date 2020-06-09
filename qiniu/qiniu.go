@@ -21,3 +21,16 @@ func GetUptoken(fileName string) string {
 	upToken := putPolicy.UploadToken(mac)
 	return upToken
 }
+
+func GetUptokenPhotos() string {
+	accessKey := config.Sysconfig.AccessKeyQn
+	secretKey := config.Sysconfig.SecretKeyQn
+	bucket := config.Sysconfig.BucketName
+	putPolicy := storage.PutPolicy{
+		Scope: bucket,
+	}
+	putPolicy.Expires = 7200 //示例2小时有效期
+	mac := qbox.NewMac(accessKey, secretKey)
+	upToken := putPolicy.UploadToken(mac)
+	return upToken
+}

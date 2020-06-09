@@ -8,7 +8,7 @@ type User struct {
 	COLLEGE     string `gorm:"type:varchar(20)"`
 	MAJOR       string `gorm:"type:varchar(20)"`
 	CLASS       string `gorm:"type:varchar(10)"`
-	MYIMG       string `gorm:"type:varchar(35)"`
+	MYIMG       string `gorm:"type:varchar(70)"`
 	CanSearchMe string `gorm:"type:varchar(5)"`
 }
 
