@@ -6,6 +6,7 @@ import (
 	"MindaZepeto/repohandler"
 	"MindaZepeto/util"
 	"MindaZepeto/wxlogin"
+	"strconv"
 
 	"github.com/kataras/iris"
 )
@@ -145,8 +146,9 @@ func DeleteGroupPhoto(ctx iris.Context) {
 	iduser := ctx.URLParam("iduser")
 	idimg := ctx.URLParam("idimg")
 	userid := ctx.URLParam("userid")
+	idMirr, _ := strconv.Atoi(idimg)
 	tableName := util.GetGroupPhotoTableName(iduser)
-	list := repohandler.DeleteGroupPhoto(tableName, idimg, userid)
+	list := repohandler.DeleteGroupPhoto(tableName, idMirr, userid)
 	result := util.GetReturnData(list, "SUCCESS")
 	ctx.JSON(result)
 }
@@ -176,4 +178,8 @@ func DeleteAllPhoto(ctx iris.Context) {
 	list := repohandler.DeleteAllPhotos(userid, tableName)
 	result := util.GetReturnData(list, "SUCCESS")
 	ctx.JSON(result)
+}
+
+func DeletePhotos(ctx iris.Context) {
+
 }

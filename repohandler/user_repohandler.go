@@ -136,9 +136,9 @@ func AddGroupPhoto(userid string, location string, time string, url string, tabl
 }
 
 //DeleteGroupPhoto 删除某用户的某张图片
-func DeleteGroupPhoto(tableName string, idimg string, userid string) *[]models.Grouphotoend {
+func DeleteGroupPhoto(tableName string, idimg int, userid string) *[]models.Grouphotoend {
 	nouse := new([]models.Grouphotoend)
-	err := db.Raw("DELETE FROM ? WHERE user_id = ? AND  id = ? ", tableName, userid, idimg).Scan(&nouse).RowsAffected
+	err := db.Raw("DELETE FROM "+tableName+"  WHERE user_id = ? AND  id = ? ", userid, idimg).Scan(&nouse).RowsAffected
 	if err > 0 {
 		result := new([]models.Grouphotoend)
 		db.Table(tableName).Where("user_id = ?", userid).Find(&result)
@@ -160,8 +160,8 @@ func GetMyPhotos(userid string, tableName string) *[]models.Grouphotoend {
 }
 
 func DeleteFriend(myid string, friendid string) *[]models.Users {
-	nouse := new(models.Friends)
-	err := db.Raw("DELETE FROM friends WHERE my_id = ? AND friend_id = ? ", myid, friendid).Scan(&nouse).RowsAffected
+	nouse := new([]models.Friends)
+	err := db.Raw("DELETE FROM "+`friends`+" WHERE my_id = ? AND friend_id = ? ", myid, friendid).Scan(&nouse).RowsAffected
 	if err > 0 {
 		result := GetMyFriendsList(myid)
 		return result

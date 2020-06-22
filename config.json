@@ -5,6 +5,7 @@
     "AccessKeyQn ":"AccessKeyQn ",
     "SecretKeyQn":"SecretKeyQn",
     "BucketName":"BucketName",
+    "BucketNameb":"BucketNameb",
     "DBUserName": "debian-sys-maint",
     "DBPassword": "376A03DSrWU0akjN",
     "DBIp": "127.0.0.1",

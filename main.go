@@ -63,6 +63,7 @@ func main() {
 		personal.Get("/deleteFriend", controllers.DeleteFriend)
 		personal.Get("/deleteAllPhoto", controllers.DeleteAllPhoto)
 		personal.Get("/getUptokenPhotos", controllers.GetUptokenPhotos)
+		personal.Get("/deletePhotos", controllers.DeletePhotos)
 	})
 	app.Run(iris.Addr(config.Sysconfig.Port))
 }

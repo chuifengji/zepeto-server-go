@@ -32,6 +32,7 @@ type ResultList struct {
 	ShoesList      []models.Shoes
 	GlassesList    []models.Glasses
 	OthersList     []models.Others
+	SpecialList    []models.Special
 }
 
 func GetAppearanceList() *ResultList {
@@ -44,6 +45,7 @@ func GetAppearanceList() *ResultList {
 	shoesList := new([]models.Shoes)
 	glassesList := new([]models.Glasses)
 	othersList := new([]models.Others)
+	specialList := new([]models.Special)
 	db.Raw(`select * FROM feature`).Scan(&featureList)
 	db.Raw(`select * FROM hair`).Scan(&hairList)
 	db.Raw(`select * FROM expression`).Scan(&expressionList)
@@ -53,6 +55,7 @@ func GetAppearanceList() *ResultList {
 	db.Raw(`select * FROM shoes`).Scan(&shoesList)
 	db.Raw(`select * FROM glasses`).Scan(&glassesList)
 	db.Raw(`select * FROM others`).Scan(&othersList)
+	db.Raw(`select * FROM special`).Scan(&specialList)
 	resultlist := &ResultList{
 		*featureList,
 		*hairList,
@@ -63,6 +66,7 @@ func GetAppearanceList() *ResultList {
 		*shoesList,
 		*glassesList,
 		*othersList,
+		*specialList,
 	}
 	return resultlist
 }

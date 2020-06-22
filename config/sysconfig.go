@@ -27,6 +27,7 @@ type sysconfig struct {
 	AccessKeyQn string `json:"AccessKeyQn"`
 	SecretKeyQn string `json:"SecretKeyQn"`
 	BucketName  string `json:"BucketName"`
+	BucketNameb string `json:"BucketNameb"`
 	DBUserName  string `json:"DBUserName"`
 	DBPassword  string `json:"DBPassword"`
 	DBIp        string `json:"DBIp"`

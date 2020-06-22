@@ -19,6 +19,7 @@ func Createtable() {
 		&models.Trousers{},
 		&models.Overcoat{},
 		&models.Others{},
+		&models.Special{},
 		&models.Grouphotoaaa{},
 		&models.Grouphotoaab{},
 		&models.Grouphotoaac{},
