@@ -7,7 +7,7 @@
     "BucketName":"BucketName",
     "BucketNameb":"BucketNameb",
     "DBUserName": "debian-sys-maint",
-    "DBPassword": "",
+    "DBPassword": "反正这个服务器也已经到期了",
     "DBIp": "127.0.0.1",
     "DBPort": "3306",
     "DBName": "mindazepeto",
