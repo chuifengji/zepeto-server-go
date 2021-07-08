@@ -7,7 +7,7 @@
     "BucketName":"BucketName",
     "BucketNameb":"BucketNameb",
     "DBUserName": "debian-sys-maint",
-    "DBPassword": "376A03DSrWU0akjN",
+    "DBPassword": "",
     "DBIp": "127.0.0.1",
     "DBPort": "3306",
     "DBName": "mindazepeto",
